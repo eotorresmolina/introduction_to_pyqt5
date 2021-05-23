@@ -1,4 +1,8 @@
+import sys
+import os
+from codecs import decode
 from PyQt5 import uic, QtWidgets
+
 
 qtCreatorFile = r'C:\Users\Emmanuel\Documents\GitHub\introduction_to_pyqt5\temperature_converter\temperature_converter.ui'
 
@@ -94,9 +98,9 @@ class MainApp(QtWidgets.QMainWindow):
 
 
 if __name__ == '__main__':
-    app = QtWidgets.QApplication([])
+    app = QtWidgets.QApplication(sys.argv)  # En este caso se puede reemplazar por: QtWidgets.QApplication([])
     window = MainApp(title='Temperature Converter')
     window.initUi()
     window.show()
-    app.exec_()
+    sys.exit(app.exec_())
     
