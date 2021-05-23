@@ -14,6 +14,31 @@ class MainApp(QtWidgets.QMainWindow):
         self.Button_fahrenh.clicked.connect(self.converterCtoF)
         self.Button_exit.clicked.connect(self.closeWindow)
 
+
+    # ------ SLOTS ------
+    
+    # Conversor de Fahrenheit a Celsius. 
+    def converterFtoC(self):
+        temperature_f = self.get_valueLineEdit('fahrenheit')
+        if self.is_digit(temperature_f):
+            temperature_c = str(round(float((5/9) * (float(temperature_f) - 32)), 2))
+        else:
+            temperature_c = 'NaN'
+        self.lineEdit_celsius.setText(temperature_c)
+
+    # Conversor de Celsius a Fahrenheit. 
+    def converterCtoF(self):
+        temperature_c = self.get_valueLineEdit('celsius')
+        if self.is_digit(temperature_c):
+            temperature_f = str(round(float((9/5) * (float(temperature_c) + 32)), 2))
+        else:
+            temperature_f = 'NaN'
+        self.lineEdit_fahrenheit.setText(temperature_f)
+
+    def closeWindow(self):
+        self.close()
+
+
     # ------ METHODS -------
     def initUi(self):
         # Inicialización de Botones.
@@ -44,40 +69,28 @@ class MainApp(QtWidgets.QMainWindow):
     def is_digit(self, my_str):
         if '.' in my_str:
             digits = my_str.split('.')
-            if digits[0].isdigit() and digits[1].isdigit():
-                return True
+            if digits[0][0] is '-':
+                if digits[0].split('-')[1].isdigit() and digits[1].isdigit():
+                    return True
+                else:
+                    return False
             else:
-                return False
+                if digits[0].isdigit() and digits[1].isdigit():
+                    return True
+                else:
+                    return False
         else:
-            if my_str.isdigit():
-                return True
+            if my_str[0] == '-':
+                digits = my_str.split('-')
+                if digits[1].isdigit():
+                    return True
+                else:
+                    return False
             else:
-                return False
-
-        
-    # Conversor de Fahrenheit a Celsius. 
-    def converterFtoC(self):
-        temperature_f = self.get_valueLineEdit('fahrenheit')
-        if self.is_digit(temperature_f):
-            temperature_c = str(float((5/9) * (float(temperature_f) - 32)))
-        else:
-            temperature_c = 'NaN'
-        self.lineEdit_celsius.setText(temperature_c)
-
-
-    # Conversor de Celsius a Fahrenheit. 
-    def converterCtoF(self):
-        temperature_c = self.get_valueLineEdit('celsius')
-        if self.is_digit(temperature_c):
-            temperature_f = str(float((9/5) * (float(temperature_c) + 32)))
-        else:
-            temperature_f = 'NaN'
-        self.lineEdit_fahrenheit.setText(temperature_f)
-
-
-    def closeWindow(self):
-        self.close()
-
+                if my_str.isdigit():
+                    return True
+                else:
+                    return False
 
 
 if __name__ == '__main__':
