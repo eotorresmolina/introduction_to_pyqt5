@@ -1,10 +1,8 @@
 import sys
-import os
-from codecs import decode
 from PyQt5 import uic, QtWidgets
 
 
-qtCreatorFile = r'C:\Users\Emmanuel\Documents\GitHub\introduction_to_pyqt5\temperature_converter\temperature_converter.ui'
+qtCreatorFile = r'C:/Users/Emmanuel/Documents/GitHub/introduction_to_pyqt5/temperature_converter/temperature_converter.ui'
 
 
 class MainApp(QtWidgets.QMainWindow):
@@ -12,6 +10,8 @@ class MainApp(QtWidgets.QMainWindow):
         super(MainApp, self).__init__()  # Equivale a: super().__init__()
         uic.loadUi(uifile=qtCreatorFile, baseinstance=self)
         self.setWindowTitle(title)
+        self.setFixedSize(500, 250)
+        self.setStyleSheet("background-color: rgb(42, 42, 42)")
 
         # ------ SIGNALS ------
         self.Button_celsius.clicked.connect(self.converterFtoC)
@@ -24,19 +24,25 @@ class MainApp(QtWidgets.QMainWindow):
     # Conversor de Fahrenheit a Celsius. 
     def converterFtoC(self):
         temperature_f = self.get_valueLineEdit('fahrenheit')
-        if self.is_digit(temperature_f):
-            temperature_c = str(round(float((5/9) * (float(temperature_f) - 32)), 2))
+        if temperature_f is not '':
+            if self.is_digit(temperature_f):
+                temperature_c = str(round(float((5/9) * (float(temperature_f) - 32)), 2))
+            else:
+                temperature_c = 'NaN'
         else:
-            temperature_c = 'NaN'
+            temperature_c = ''
         self.lineEdit_celsius.setText(temperature_c)
 
     # Conversor de Celsius a Fahrenheit. 
     def converterCtoF(self):
         temperature_c = self.get_valueLineEdit('celsius')
-        if self.is_digit(temperature_c):
-            temperature_f = str(round(float((9/5) * (float(temperature_c) + 32)), 2))
+        if temperature_c is not '':
+            if self.is_digit(temperature_c):
+                temperature_f = str(round(float((9/5) * (float(temperature_c) + 32)), 2))
+            else:
+                temperature_f = 'NaN'
         else:
-            temperature_f = 'NaN'
+            temperature_f = ''
         self.lineEdit_fahrenheit.setText(temperature_f)
 
     def closeWindow(self):
@@ -48,17 +54,28 @@ class MainApp(QtWidgets.QMainWindow):
         # Inicialización de Botones.
         self.Button_celsius.setText('Fahrenheit --> Celsius')
         self.Button_fahrenh.setText('Celsius --> Fahrenheit')
-        self.Button_exit.setText('Exit')
+        self.Button_exit.setText('Salir')
+        self.Button_celsius.setStyleSheet('background-color: rgb(0, 118, 177); color: rgb(244, 244, 244);'
+                                            + 'font: 70 10.5pt "Arial Black"')
+        self.Button_fahrenh.setStyleSheet('background-color: rgb(0, 118, 177); color: rgb(244, 244, 244);'
+                                            + 'font: 70 10.5pt "Arial Black"')
+        self.Button_exit.setStyleSheet('background-color: rgb(0, 118, 177); font: 70 17pt "Arial Black"')
 
         # Inicialización de Etiquetas.
-        self.label_f.setText('° F')
-        self.label_c.setText('° C')
+        self.label_f.setText('°F')
+        self.label_c.setText('°C')
+        self.label_c.setStyleSheet('color: red; font: 70 16pt "Arial Black"')
+        self.label_f.setStyleSheet('color: red; font: 70 16pt "Arial Black"')
 
         # Inicialización de lineEdit:
-        self.lineEdit_fahrenheit.setPlaceholderText('Ingresar Temperatura en ° F')
-        self.lineEdit_celsius.setPlaceholderText('Ingresar Temperatura en ° C')
+        self.lineEdit_fahrenheit.setPlaceholderText('Temperatura en °F')
+        self.lineEdit_celsius.setPlaceholderText('Temperatura en °C')
         self.lineEdit_fahrenheit.setClearButtonEnabled(True)
         self.lineEdit_celsius.setClearButtonEnabled(True)
+        self.lineEdit_fahrenheit.setStyleSheet('background-color: rgb(255, 255, 255);'
+                                                + 'font: 63 italic 13pt "Segoe UI Semibold"')
+        self.lineEdit_celsius.setStyleSheet('background-color: rgb(255, 255, 255);'
+                                                + 'font: 63 italic 13pt "Segoe UI Semibold"')
 
 
     def get_valueLineEdit(self, label=''):
@@ -98,7 +115,7 @@ class MainApp(QtWidgets.QMainWindow):
 
 
 if __name__ == '__main__':
-    app = QtWidgets.QApplication(sys.argv)  # En este caso se puede reemplazar por: QtWidgets.QApplication([])
+    app = QtWidgets.QApplication(sys.argv) # En este caso se puede reemplazar por: QtWidgets.QApplication([])
     window = MainApp(title='Temperature Converter')
     window.initUi()
     window.show()
