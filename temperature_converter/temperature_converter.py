@@ -1,3 +1,31 @@
+'''
+Temperature Converter [Python]
+---------------------------
+Autor: Torres Molina, Emmanuel O.
+Version: 1.1
+Descripción:
+Uso de QT Designer y PyQt5 para realizar
+un programa de Interfaz Gráfica.
+Dicho programa/aplicación consiste
+en realizar una conversión de temperatura,
+de Celsius a Fahrenheit ,y, viceversar.
+Uso de PushButton, QlineEdit, QLabel.
+
+Para crear el ejecutable a partir de este script
+y del archivo .ui (ambos deben estar en el mismo
+directorio) ejecute en consola el siguiente comando:
+
+pyinstaller --name="Temperature Converter" --windowed --onefile --add-data "temperature_converter.ui;." temperature_converter.py
+
+Para instalar pyinstaller:
+pip install pyinstaller -U
+
+'''
+
+__author__ = "Torres Molina, Emmanuel O."
+__email__ = "emmaotm@gmail.com"
+__version__ = "1.1"
+
 import sys
 import os
 from PyQt5 import uic, QtWidgets
