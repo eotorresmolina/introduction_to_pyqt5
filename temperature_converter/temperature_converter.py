@@ -1,23 +1,32 @@
 import sys
+import os
 from PyQt5 import uic, QtWidgets
 
+script_path = os.path.dirname(os.path.abspath(__file__))
+qtcreatorfile= os.path.join(script_path, 'temperature_converter.ui')
 
-qtCreatorFile = r'C:/Users/Emmanuel/Documents/GitHub/introduction_to_pyqt5/temperature_converter/temperature_converter.ui'
+
+# Translate asset paths to useable format for PyInstaller
+'''
+def resource_path(relative_path):
+    """ Get absolute path to resource, works for dev and for PyInstaller"""
+    base_path = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
+    return os.path.join(base_path, relative_path)
+'''
 
 
 class MainApp(QtWidgets.QMainWindow):
     def __init__(self, title='MainWindow', *args):
         super(MainApp, self).__init__()  # Equivale a: super().__init__()
-        uic.loadUi(uifile=qtCreatorFile, baseinstance=self)
+        uic.loadUi(uifile=qtcreatorfile, baseinstance=self)
         self.setWindowTitle(title)
-        self.setFixedSize(500, 250)
+        self.setFixedSize(700, 250)
         self.setStyleSheet("background-color: rgb(42, 42, 42)")
 
         # ------ SIGNALS ------
         self.Button_celsius.clicked.connect(self.converterFtoC)
         self.Button_fahrenh.clicked.connect(self.converterCtoF)
         self.Button_exit.clicked.connect(self.closeWindow)
-
 
     # ------ SLOTS ------
     
@@ -115,6 +124,9 @@ class MainApp(QtWidgets.QMainWindow):
 
 
 if __name__ == '__main__':
+    #if hasattr(sys, '_MEIPASS'):
+    #    os.chdir(sys._MEIPASS)
+
     app = QtWidgets.QApplication(sys.argv) # En este caso se puede reemplazar por: QtWidgets.QApplication([])
     window = MainApp(title='Temperature Converter')
     window.initUi()
