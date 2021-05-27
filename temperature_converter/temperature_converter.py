@@ -125,18 +125,21 @@ class MainApp(QtWidgets.QMainWindow):
 
 
     def is_digit(self, my_str):
-        if '.' in my_str:
-            digits = my_str.split('.')
-            if digits[0][0] is '-':
-                if digits[0].split('-')[1].isdigit() and digits[1].isdigit():
-                    return True
-                else:
-                    return False
+        if '.' in my_str and my_str[0] != '.':
+            if my_str.count('.') > 1:
+                return False
             else:
-                if digits[0].isdigit() and digits[1].isdigit():
-                    return True
+                digits = my_str.split('.')
+                if digits[0][0] is '-':
+                    if digits[0].split('-')[1].isdigit() and digits[1].isdigit():
+                        return True
+                    else:
+                        return False
                 else:
-                    return False
+                    if digits[0].isdigit() and digits[1].isdigit():
+                        return True
+                    else:
+                        return False
         else:
             if my_str[0] == '-':
                 digits = my_str.split('-')
