@@ -62,7 +62,7 @@ class MainApp(QtWidgets.QMainWindow):
     def converterFtoC(self):
         temperature_f = self.get_valueLineEdit('fahrenheit')
         if temperature_f is not '':
-            if self.is_digit(temperature_f):
+            if self.is_float(temperature_f):
                 temperature_c = str(round(float((5/9) * (float(temperature_f) - 32)), 2))
             else:
                 temperature_c = 'NaN'
@@ -74,7 +74,7 @@ class MainApp(QtWidgets.QMainWindow):
     def converterCtoF(self):
         temperature_c = self.get_valueLineEdit('celsius')
         if temperature_c is not '':
-            if self.is_digit(temperature_c):
+            if self.is_float(temperature_c):
                 temperature_f = str(round(float((9/5) * (float(temperature_c) + 32)), 2))
             else:
                 temperature_f = 'NaN'
@@ -124,40 +124,15 @@ class MainApp(QtWidgets.QMainWindow):
             return ''
 
 
-    def is_digit(self, my_str):
-        if '.' in my_str and my_str[0] != '.':
-            if my_str.count('.') > 1:
-                return False
-            else:
-                digits = my_str.split('.')
-                if digits[0][0] is '-':
-                    if digits[0].split('-')[1].isdigit() and digits[1].isdigit():
-                        return True
-                    else:
-                        return False
-                else:
-                    if digits[0].isdigit() and digits[1].isdigit():
-                        return True
-                    else:
-                        return False
-        else:
-            if my_str[0] == '-':
-                digits = my_str.split('-')
-                if digits[1].isdigit():
-                    return True
-                else:
-                    return False
-            else:
-                if my_str.isdigit():
-                    return True
-                else:
-                    return False
+    def is_float(self, my_str):
+        try:
+            float(my_str)
+            return True
+        except:
+            return False
 
 
 if __name__ == '__main__':
-    #if hasattr(sys, '_MEIPASS'):
-    #    os.chdir(sys._MEIPASS)
-
     app = QtWidgets.QApplication(sys.argv) # En este caso se puede reemplazar por: QtWidgets.QApplication([])
     window = MainApp(title='Temperature Converter')
     window.initUi()
